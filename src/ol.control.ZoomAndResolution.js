@@ -11,7 +11,6 @@ ol.control.ZoomAndResolution=function(opt_options){
     var _this=this;
     var controlDiv=document.createElement("div");
     controlDiv.className=options.className||"ol-zoom-pos ol-unselectable ol-control";
-    controlDiv.textContent = options.label || '';
     var label=document.createElement('label');
     controlDiv.appendChild(label);
     ol.control.Control.call(this, {
