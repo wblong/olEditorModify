@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>OLEditor</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.1/ol.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/ol4/ol.css">
     <link rel="stylesheet" href="dist/ol.editor.css">
     <link rel="shortcut icon" href="favicon.ico">
     <!--[if lt IE 9]>
@@ -280,10 +280,10 @@
 		  </div>
 		</div>
 			
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.1/ol-debug.js"></script>
+		<script src="lib/jquery/jquery.min.js"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/proj4/proj4.js"></script>
+        <script src="lib/ol4/ol-debug.js"></script>
 		<script src="dist/ol.editor.js"></script>
 		<script>
 
@@ -299,14 +299,24 @@
         view: new ol.View({
             //projection: 'EPSG:4326',
             extent: ol.proj.get('EPSG:3857').getExtent(),
-            center: [0, 0],
-            zoom: 2
+            center: ol.proj.transform([113.4668,33.8818],"EPSG:4326","EPSG:3857"),
+            zoom: 4
         }),
         layers: [
-            new ol.layer.Tile({
-                name: 'OpenStreetMap',
-                source: new ol.source.OSM()
-            })
+            new ol.layer.Vector({
+                name:"china",
+                source:new ol.source.Vector({
+                    format:new ol.format.GeoJSON(),
+                    url:'data/china.json'
+                })
+            }),
+            // new ol.layer.Vector({
+            //     name:"world",
+            //     source:new ol.source.Vector({
+            //         format:new ol.format.GeoJSON(),
+            //         url:'data/world.json'
+            //     })
+            // })
         ],
         controls: [
             new ol.control.Rotate(),
@@ -328,6 +338,9 @@
             new ol.control.EditingControls({ target: 'featuretools' }),
             new ol.control.Measure({ target: 'analysistools' }),
             new ol.control.Message({ target: 'statusbar' }),
+            new ol.control.ZoomAndResolution(
+                { target: 'statusbar' }
+            ),
             new ol.control.MousePosition({
                 target: 'statusbar',
                 className: 'ol-mouse-position ol-control ol-unselectable',

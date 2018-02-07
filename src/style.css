@@ -429,6 +429,10 @@ a.pin.active i {
 }
 .statusbar .ol-message {
 }
+.statusbar .ol-zoom-pos{
+    width: 80px;
+    color: #333;
+}
 .statusbar .ol-mouse-position {
 	width: 210px;
     text-align: right;

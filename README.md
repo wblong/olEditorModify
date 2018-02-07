@@ -1,3 +1,7 @@
+# 部分修改及练习
+  修改 三方库为本地目录
+  添加 ol.control.ZoomAndResolution
+  
 # [![OLEditor](res/logo.png "OLEditor")](http://github.com/programmerg/ol3editor)
 _Desktop-like UI for the OpenLayers 3+ web mapping library._
 
