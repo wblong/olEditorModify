@@ -1,0 +1,17 @@
+{
+  "name": "ol3editor",
+  "homepage": "",
+  "authors": [
+    "wangbaolong <wangbaolong@iseetech.com.cn>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "lib",
+    "test",
+    "tests"
+  ]
+}
