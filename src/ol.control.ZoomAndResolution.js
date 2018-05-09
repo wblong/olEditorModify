@@ -35,3 +35,4 @@ ol.control.ZoomAndResolution.prototype.setMap = function(map) {
         }, this));
     }
 };
+
