@@ -14,7 +14,7 @@
 ol.interaction.SelectBox = function(opt_options) {
     var options = opt_options || {};
     var _this = this;
-    
+    //this, options附加参数
     ol.interaction.DragBox.call(this, options);
     
     this.set('features', options.features || new ol.collection());

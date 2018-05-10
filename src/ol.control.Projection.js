@@ -43,7 +43,10 @@ ol.control.Projection = function(opt_options) {
 };
 ol.inherits(ol.control.Projection, ol.control.Control);
 
-
+/**
+ * [setMap projection]
+ * @param {[type]} map [projection]
+ */
 ol.control.Projection.prototype.setMap = function(map) {
     ol.control.Control.prototype.setMap.call(this, map);
     if (map === null) {
@@ -60,7 +63,10 @@ ol.control.Projection.prototype.setMap = function(map) {
         }, this));
     }
 };
-
+/**
+ * [addProjection]
+ * @param {[type]} projCode [description]
+ */
 ol.control.Projection.prototype.addProjection = function(projCode) {
     
     var projection;
@@ -91,15 +97,24 @@ ol.control.Projection.prototype.addProjection = function(projCode) {
     newOption.textContent = (!!proj4 && proj4.defs(projCode).title !== undefined) ? proj4.defs(projCode).title : projection.getCode();
     this.get('element').appendChild(newOption);
 };
-
+/**
+ * [changeLayerProjection]
+ * @param  {[type]} layer   [description]
+ * @param  {[type]} oldProj [description]
+ * @param  {[type]} newProj [description]
+ * @return {[type]}         [description]
+ */
 ol.control.Projection.prototype.changeLayerProjection = function(layer, oldProj, newProj) {
+    //ol.layer.Group
     if (layer instanceof ol.layer.Group) {
         layer.getLayers().forEach(function(subLayer) {
             this.changeLayerProjection(subLayer, oldProj, newProj);
         });
+    //ol.layer.Tile
     } else if (layer instanceof ol.layer.Tile) {
         var tileLoadFunction = layer.getSource().getTileLoadFunction();
         layer.getSource().setTileLoadFunction(tileLoadFunction);
+    //ol.layer.Vector
     } else if (layer instanceof ol.layer.Vector) {
         var currProj = layer.getSource().getProjection();
         var features = layer.getSource().getFeatures();

@@ -41,7 +41,10 @@ ol.control.AttributeManager = function(opt_options) {
     });
 };
 ol.inherits(ol.control.AttributeManager, ol.control.Control);
-
+/**
+ * [setMap description]
+ * @param {[type]} map [description]
+ */
 ol.control.AttributeManager.prototype.setMap = function(map) {
     ol.control.Control.prototype.setMap.call(this, map);
     if (map === null) {

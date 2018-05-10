@@ -36,7 +36,10 @@ ol.control.Rotation = function(opt_options) {
     this.set('element', rotationInput);
 };
 ol.inherits(ol.control.Rotation, ol.control.Control);
-
+/**
+ * [rotation]
+ * @param {[type]} map [description]
+ */
 ol.control.Rotation.prototype.setMap = function(map) {
     
     ol.control.Control.prototype.setMap.call(this, map);

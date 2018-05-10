@@ -72,8 +72,27 @@ ol.Editor = function(options) {
      */
     ol.Map.call(this, options);
 };
-ol.inherits(ol.Editor, ol.Map);
+/**
+*    ol.inherits = function(childCtor, parentCtor) {
+*         childCtor.prototype = Object.create(parentCtor.prototype);
+*         childCtor.prototype.constructor = childCtor;
+*   };
+*/
 
+//ol.inherits(ol.Editor, ol.Map);
+//inherit relationship
+//prototype原型对象 =对象
+//constructor 属性
+//原型对象的实例
+// call
+// apply
+// 修改prototype属性后,必须手动修改prototype.constructor属性
+// new 与 Object.create的区别子对象是否具有父对象实例的方法
+// 闭包
+// 函数式编程
+// 函数工厂
+ol.Editor.prototype=Object.create(ol.Map.prototype);
+ol.Editor.prototype.constructor=ol.Editor;
 /**
  * Add the given control to the editor.
  * @param {ol.control.Control} control Control.

@@ -1835,6 +1835,7 @@ ol.control.Message = function(opt_options) {
     controlDiv.textContent = options.label || '';
     
     var observer = new MutationObserver(function(mutations) {
+//监控message control的变动
         if (timeout && mutations[0].target.textContent) {
             var oldText = mutations[0].target.textContent;
             var timeoutFunction = function() {
@@ -1858,6 +1859,12 @@ ol.control.Message = function(opt_options) {
 };
 ol.inherits(ol.control.Message, ol.control.Control);
 /**
+ * var observer = new MutationObserver(function (mutations, observer) {
+ *     mutations.forEach(function(mutation) {
+ *         console.log(mutation);
+ *      });
+ * });
+ *//**
  * @classdesc
  * A button control which, when pressed, render the map view to a specific
  * PNG image. To style this control use the css selector `.ol-print`.
@@ -1940,7 +1947,10 @@ ol.control.Projection = function(opt_options) {
 };
 ol.inherits(ol.control.Projection, ol.control.Control);
 
-
+/**
+ * [setMap projection]
+ * @param {[type]} map [projection]
+ */
 ol.control.Projection.prototype.setMap = function(map) {
     ol.control.Control.prototype.setMap.call(this, map);
     if (map === null) {
@@ -1957,7 +1967,10 @@ ol.control.Projection.prototype.setMap = function(map) {
         }, this));
     }
 };
-
+/**
+ * [addProjection]
+ * @param {[type]} projCode [description]
+ */
 ol.control.Projection.prototype.addProjection = function(projCode) {
     
     var projection;
@@ -1988,15 +2001,24 @@ ol.control.Projection.prototype.addProjection = function(projCode) {
     newOption.textContent = (!!proj4 && proj4.defs(projCode).title !== undefined) ? proj4.defs(projCode).title : projection.getCode();
     this.get('element').appendChild(newOption);
 };
-
+/**
+ * [changeLayerProjection]
+ * @param  {[type]} layer   [description]
+ * @param  {[type]} oldProj [description]
+ * @param  {[type]} newProj [description]
+ * @return {[type]}         [description]
+ */
 ol.control.Projection.prototype.changeLayerProjection = function(layer, oldProj, newProj) {
+    //ol.layer.Group
     if (layer instanceof ol.layer.Group) {
         layer.getLayers().forEach(function(subLayer) {
             this.changeLayerProjection(subLayer, oldProj, newProj);
         });
+    //ol.layer.Tile
     } else if (layer instanceof ol.layer.Tile) {
         var tileLoadFunction = layer.getSource().getTileLoadFunction();
         layer.getSource().setTileLoadFunction(tileLoadFunction);
+    //ol.layer.Vector
     } else if (layer instanceof ol.layer.Vector) {
         var currProj = layer.getSource().getProjection();
         var features = layer.getSource().getFeatures();
@@ -2045,7 +2067,10 @@ ol.control.Rotation = function(opt_options) {
     this.set('element', rotationInput);
 };
 ol.inherits(ol.control.Rotation, ol.control.Control);
-
+/**
+ * [rotation]
+ * @param {[type]} map [description]
+ */
 ol.control.Rotation.prototype.setMap = function(map) {
     
     ol.control.Control.prototype.setMap.call(this, map);
@@ -2075,7 +2100,7 @@ ol.control.Rotation.prototype.setMap = function(map) {
 ol.interaction.SelectBox = function(opt_options) {
     var options = opt_options || {};
     var _this = this;
-    
+    //this, options附加参数
     ol.interaction.DragBox.call(this, options);
     
     this.set('features', options.features || new ol.collection());
@@ -2289,7 +2314,7 @@ ol.inherits(ol.control.ZoomToSelection, ol.control.Control);/**
  * current view parameters. To style this control use the css selector `.ol-share`.
  * When the control is creted, the permalink updates the view automatically on load.
  * When the autoUpdate option is true, then every view action updates the permalink.
- *
+ * http://localhost:8089/#105.011736,36.257694,3.92,0
  * @constructor
  * @extends {ol.control.Control}
  * @param {olx.control.ControlOptions} options Control options.
@@ -2321,6 +2346,7 @@ ol.control.ShareMap = function(opt_options) {
         element: controlDiv,
         target: options.target
     });
+    //自定义属性
     this.setProperties({
         precision: options.precision || 6,
         autoUpdate: options.autoUpdate || false,
@@ -2332,7 +2358,10 @@ ol.control.ShareMap = function(opt_options) {
 };
 ol.inherits(ol.control.ShareMap, ol.control.Control);
 
-
+/**
+ * [setMap description]
+ * @param {[type]} map [description]
+ */
 ol.control.ShareMap.prototype.setMap = function(map) {
     ol.control.Control.prototype.setMap.call(this, map);
     
@@ -2373,7 +2402,10 @@ ol.control.ShareMap.prototype.setMap = function(map) {
 		}
     }
 };
-
+/**
+ * [getState description]
+ * @return {[State]} [description]
+ */
 ol.control.ShareMap.prototype.getState = function() {
     var view = this.getMap().getView();
 	return {
@@ -2382,7 +2414,10 @@ ol.control.ShareMap.prototype.getState = function() {
 		rotation: Math.round( view.getRotation() *100)/100
 	};
 }
-
+/**
+ * [setState description]
+ * @param {[type]} state [description]
+ */
 ol.control.ShareMap.prototype.setState = function(state) {
 	var state = state || {};
 	var view = this.getMap().getView();
@@ -2392,7 +2427,7 @@ ol.control.ShareMap.prototype.setState = function(state) {
 }/**
  * @classdesc
  * 
- *
+ *  在状态栏上显示地图缩放的级别及分辨率
  * @constructor
  * @extends {ol.control.Control}
  * @param {olx.control.ControlOptions} options Control options.
@@ -2402,7 +2437,6 @@ ol.control.ZoomAndResolution=function(opt_options){
     var _this=this;
     var controlDiv=document.createElement("div");
     controlDiv.className=options.className||"ol-zoom-pos ol-unselectable ol-control";
-    controlDiv.textContent = options.label || '';
     var label=document.createElement('label');
     controlDiv.appendChild(label);
     ol.control.Control.call(this, {
@@ -2426,7 +2460,9 @@ ol.control.ZoomAndResolution.prototype.setMap = function(map) {
             //alert(this.get('element').innerHTML);
         }, this));
     }
-};/**
+};
+
+/**
  * @classdesc
  * A select control which, when changed, render the map view to a specific
  * projection. To style this control use the css selector `.ol-projection`.
@@ -2442,7 +2478,7 @@ ol.control.ZoomHistory = function(opt_options) {
     
     var controlDiv = document.createElement('div');
     controlDiv.className = options.className || 'ol-navhist ol-unselectable ol-control';
-    
+    //preview
     var backButton = document.createElement('button');
     backButton.className = options.backClassName || 'ol-navhist-back';
     backButton.textContent = options.backLabel || '';
@@ -2460,7 +2496,7 @@ ol.control.ZoomHistory = function(opt_options) {
     });
     backButton.disabled = true;
     controlDiv.appendChild(backButton);
-    
+    //next view
     var nextButton = document.createElement('button');
     nextButton.className = options.nextClassName || 'ol-navhist-next';
     nextButton.textContent = options.nextLabel || '';
@@ -2478,12 +2514,12 @@ ol.control.ZoomHistory = function(opt_options) {
     });
     nextButton.disabled = true;
     controlDiv.appendChild(nextButton);
-    
+    //调用基类的构造函数
     ol.control.Control.call(this, {
         element: controlDiv,
         target: options.target
     });
-    
+    //自定义属性
     this.setProperties({
         history: [],
         index: -1,
@@ -2491,7 +2527,7 @@ ol.control.ZoomHistory = function(opt_options) {
         eventId: null,
         shouldSave: true
     });
-    
+    //添加自定义事件
     this.on('change:index', function () {
         if (this.get('index') === 0) {
             backButton.disabled = true;
@@ -2519,12 +2555,14 @@ ol.control.ZoomHistory.prototype.setMap = function(map) {
             if (this.get('shouldSave')) {
                 var history = this.get('history');
                 var index = this.get('index');
+                //删除数组index之后的数据
                 history.splice(index + 1, history.length - index - 1);
                 if (history.length === this.get('maxSize')) {
                     history.splice(0, 1);
                 } else {
                     index += 1;
                 }
+                //保存view的数据
                 history.push(map.getView().getProperties());
                 this.set('index', index);
             } else {
@@ -2592,11 +2630,17 @@ ol.inherits(ol.control.ZoomTo, ol.control.Control);/**
 ol.Editor = function(options) {
     var options = options || {};
     var attributeManager_, layerManager_;
-    
+    /**
+     * [properties selectedFeatures]
+     * @type {[ol.Collection]}
+     */
     this.selectedFeatures = (options.selectedFeatures
         && options.selectedFeatures instanceof ol.Collection)
         ? options.selectedFeatures : new ol.Collection();
-    
+    /**
+     * [getLayerManager description]
+     * @return {[ol.control.LayerManager]} [description]
+     */
     this.getLayerManager = function() {
         if (layerManager_ === undefined) {
             layerManager_ = null;
@@ -2637,11 +2681,21 @@ ol.Editor = function(options) {
             console.log(text);
         }
     };
-
+    /**
+     * new ol.Map(options)
+     */
     ol.Map.call(this, options);
 };
-ol.inherits(ol.Editor, ol.Map);
+/**
+*    ol.inherits = function(childCtor, parentCtor) {
+*         childCtor.prototype = Object.create(parentCtor.prototype);
+*         childCtor.prototype.constructor = childCtor;
+*   };
+*/
 
+//ol.inherits(ol.Editor, ol.Map);
+ol.Editor.prototype=Object.create(ol.Map.prototype);
+ol.Editor.prototype.constructor=ol.Editor;
 /**
  * Add the given control to the editor.
  * @param {ol.control.Control} control Control.
