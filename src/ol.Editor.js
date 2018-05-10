@@ -16,11 +16,17 @@
 ol.Editor = function(options) {
     var options = options || {};
     var attributeManager_, layerManager_;
-    
+    /**
+     * [properties selectedFeatures]
+     * @type {[ol.Collection]}
+     */
     this.selectedFeatures = (options.selectedFeatures
         && options.selectedFeatures instanceof ol.Collection)
         ? options.selectedFeatures : new ol.Collection();
-    
+    /**
+     * [getLayerManager description]
+     * @return {[ol.control.LayerManager]} [description]
+     */
     this.getLayerManager = function() {
         if (layerManager_ === undefined) {
             layerManager_ = null;
@@ -61,7 +67,9 @@ ol.Editor = function(options) {
             console.log(text);
         }
     };
-
+    /**
+     * new ol.Map(options)
+     */
     ol.Map.call(this, options);
 };
 ol.inherits(ol.Editor, ol.Map);

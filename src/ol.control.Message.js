@@ -19,6 +19,7 @@ ol.control.Message = function(opt_options) {
     controlDiv.textContent = options.label || '';
     
     var observer = new MutationObserver(function(mutations) {
+//监控message control的变动
         if (timeout && mutations[0].target.textContent) {
             var oldText = mutations[0].target.textContent;
             var timeoutFunction = function() {
@@ -41,3 +42,10 @@ ol.control.Message = function(opt_options) {
     });
 };
 ol.inherits(ol.control.Message, ol.control.Control);
+/**
+ * var observer = new MutationObserver(function (mutations, observer) {
+ *     mutations.forEach(function(mutation) {
+ *         console.log(mutation);
+ *      });
+ * });
+ */

@@ -14,7 +14,7 @@ ol.control.ZoomHistory = function(opt_options) {
     
     var controlDiv = document.createElement('div');
     controlDiv.className = options.className || 'ol-navhist ol-unselectable ol-control';
-    
+    //preview
     var backButton = document.createElement('button');
     backButton.className = options.backClassName || 'ol-navhist-back';
     backButton.textContent = options.backLabel || '';
@@ -32,7 +32,7 @@ ol.control.ZoomHistory = function(opt_options) {
     });
     backButton.disabled = true;
     controlDiv.appendChild(backButton);
-    
+    //next view
     var nextButton = document.createElement('button');
     nextButton.className = options.nextClassName || 'ol-navhist-next';
     nextButton.textContent = options.nextLabel || '';
@@ -50,12 +50,12 @@ ol.control.ZoomHistory = function(opt_options) {
     });
     nextButton.disabled = true;
     controlDiv.appendChild(nextButton);
-    
+    //调用基类的构造函数
     ol.control.Control.call(this, {
         element: controlDiv,
         target: options.target
     });
-    
+    //自定义属性
     this.setProperties({
         history: [],
         index: -1,
@@ -63,7 +63,7 @@ ol.control.ZoomHistory = function(opt_options) {
         eventId: null,
         shouldSave: true
     });
-    
+    //添加自定义事件
     this.on('change:index', function () {
         if (this.get('index') === 0) {
             backButton.disabled = true;
@@ -91,12 +91,14 @@ ol.control.ZoomHistory.prototype.setMap = function(map) {
             if (this.get('shouldSave')) {
                 var history = this.get('history');
                 var index = this.get('index');
+                //删除数组index之后的数据
                 history.splice(index + 1, history.length - index - 1);
                 if (history.length === this.get('maxSize')) {
                     history.splice(0, 1);
                 } else {
                     index += 1;
                 }
+                //保存view的数据
                 history.push(map.getView().getProperties());
                 this.set('index', index);
             } else {

@@ -23,3 +23,4 @@ ol.control.ZoomTo<br><sub>_extends ol.control.Control_</sub> | target: `DOM elem
 ol.control.ZoomToLayer<br><sub>_extends ol.control.ZoomTo_</sub> | target: `DOM element`,<br> className: `String`,<br> label: `String`,<br> tipLabel: `String`
 ol.control.ZoomToSelection<br><sub>_extends ol.control.ZoomTo_</sub> | target: `DOM element`,<br> className: `String`,<br> label: `String`,<br> tipLabel: `String`
 ol.interaction.SelectBox<br><sub>_extends ol.interaction.DragBox_</sub> | features:  `ol.Collection`,<br> layers:  `ol.layer.Group`,<br> styleFunc: `function(startpx, endpx)`
+ol.control.ZoomAndResolution<br><sub>_extends ol.control.Control_</sub>|target:`DOM element`,<br>className:`String`,<br>label:`String`

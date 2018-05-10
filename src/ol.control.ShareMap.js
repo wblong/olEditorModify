@@ -4,7 +4,7 @@
  * current view parameters. To style this control use the css selector `.ol-share`.
  * When the control is creted, the permalink updates the view automatically on load.
  * When the autoUpdate option is true, then every view action updates the permalink.
- *
+ * http://localhost:8089/#105.011736,36.257694,3.92,0
  * @constructor
  * @extends {ol.control.Control}
  * @param {olx.control.ControlOptions} options Control options.
@@ -36,6 +36,7 @@ ol.control.ShareMap = function(opt_options) {
         element: controlDiv,
         target: options.target
     });
+    //自定义属性
     this.setProperties({
         precision: options.precision || 6,
         autoUpdate: options.autoUpdate || false,
@@ -47,7 +48,10 @@ ol.control.ShareMap = function(opt_options) {
 };
 ol.inherits(ol.control.ShareMap, ol.control.Control);
 
-
+/**
+ * [setMap description]
+ * @param {[type]} map [description]
+ */
 ol.control.ShareMap.prototype.setMap = function(map) {
     ol.control.Control.prototype.setMap.call(this, map);
     
@@ -88,7 +92,10 @@ ol.control.ShareMap.prototype.setMap = function(map) {
 		}
     }
 };
-
+/**
+ * [getState description]
+ * @return {[State]} [description]
+ */
 ol.control.ShareMap.prototype.getState = function() {
     var view = this.getMap().getView();
 	return {
@@ -97,7 +104,10 @@ ol.control.ShareMap.prototype.getState = function() {
 		rotation: Math.round( view.getRotation() *100)/100
 	};
 }
-
+/**
+ * [setState description]
+ * @param {[type]} state [description]
+ */
 ol.control.ShareMap.prototype.setState = function(state) {
 	var state = state || {};
 	var view = this.getMap().getView();
